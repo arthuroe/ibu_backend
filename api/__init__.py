@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_cors import CORS
+import flask_excel as excel
 
 from config import app_configuration
 
@@ -13,10 +14,13 @@ app.config.from_object(app_configuration[environment])
 
 from api.models import db
 from api.auth import auth_blueprint
+from api.export import export_blueprint
 
 db.init_app(app)
+excel.init_excel(app)
 
 app.register_blueprint(auth_blueprint)
+app.register_blueprint(export_blueprint)
 
 # add support for CORS for all end points
 CORS(app)
