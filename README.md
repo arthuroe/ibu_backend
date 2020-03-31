@@ -15,7 +15,7 @@
 
 - Install the project's requirements
 
-  - `$ pip install requirements.txt`
+  - `$ pip install -r requirements.txt`
 
 - Setup postgresql database
 
