@@ -1,13 +1,18 @@
 from flask import Blueprint
 
-from api.auth.views import RegisterView, LoginView, UserView
+from api.auth.views import LoginView, ManageUserView, UserView
 
 auth_blueprint = Blueprint('auth', __name__, url_prefix='/api/v1')
-registration_view = RegisterView.as_view('register_api')
+manage_user_view = ManageUserView.as_view('manageuser_api')
 auth_blueprint.add_url_rule(
-    '/auth/register',
-    view_func=registration_view,
-    methods=['POST']
+    '/users',
+    view_func=manage_user_view,
+    methods=['GET', 'POST']
+)
+auth_blueprint.add_url_rule(
+    '/users/<user_id>',
+    view_func=manage_user_view,
+    methods=['GET', 'DELETE']
 )
 
 login_view = LoginView.as_view('login_api')
@@ -22,4 +27,9 @@ auth_blueprint.add_url_rule(
     '/current_user',
     view_func=user_view,
     methods=['GET']
+)
+auth_blueprint.add_url_rule(
+    '/users/<user_id>',
+    view_func=user_view,
+    methods=['PUT']
 )

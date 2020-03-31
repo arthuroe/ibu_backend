@@ -20,13 +20,17 @@ class User(ModelMixin):
     is_admin = db.Column(db.Boolean, default=False)
     photo = db.Column(db.String(180))
 
-    def __init__(self, email, password, name):
+    def __init__(self, email=None, password=None, name=None):
         """
         Initializes the user instance
         """
         self.email = email
-        self.password = Bcrypt().generate_password_hash(password).decode()
+        self.password = self.hash_password(password)
         self.name = name
+
+    def hash_password(self, password):
+        if password:
+            return Bcrypt().generate_password_hash(password).decode()
 
     def password_is_valid(self, password):
         """
