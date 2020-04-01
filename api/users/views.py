@@ -184,4 +184,4 @@ class UserView(MethodView):
                 'status': 'fail',
                 'message': 'Update failed. Please try again.'
             }
-            return make_response(jsonify(response)), 401
+            return make_response(jsonify(response)), 500
