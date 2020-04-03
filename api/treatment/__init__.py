@@ -5,7 +5,7 @@ from api.treatment.views import TreatmentView, TreatmentDrugView
 treatment_blueprint = Blueprint('treatment', __name__, url_prefix='/api/v1')
 treatment_view = TreatmentView.as_view('treatment_api')
 treatment_blueprint.add_url_rule(
-    '/treatments',
+    '/patients/<patient_id>/treatments',
     view_func=treatment_view,
     methods=['GET', 'POST']
 )
