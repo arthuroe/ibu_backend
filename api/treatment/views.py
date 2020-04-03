@@ -14,7 +14,7 @@ class TreatmentView(MethodView):
     """
     decorators = [token_required]
 
-    def get(self, current_user, treatment_id=None):
+    def get(self, current_user, patient_id=None, treatment_id=None):
         try:
             if treatment_id:
                 treatment = Treatment.find_first(id=treatment_id)
@@ -31,7 +31,7 @@ class TreatmentView(MethodView):
                 }
                 return make_response(jsonify(response)), 200
 
-            treatments = Treatment.fetch_all()
+            treatments = Treatment.filter_by(patient_id=patient_id)
 
             if not treatments:
                 response = {
@@ -54,9 +54,10 @@ class TreatmentView(MethodView):
             }
             return make_response(jsonify(response)), 500
 
-    def post(self, current_user):
+    def post(self, current_user, patient_id=None):
         kwargs = request.json
-
+        kwargs.update({"patient_id": patient_id})
+        print(kwargs)
         try:
             treatment = Treatment(**kwargs)
             treatment.save()
